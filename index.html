@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Tool by aDhik!</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Keuangan Pribadiku</h1>
+        <p>Kelola anggaran, pengeluaran, dan tabunganmu.</p>
+    </header>
+
+    <main>
+        <section class="panel">
+            <h2>Periode Keuangan</h2>
+            
+            <label for="inputAnggaran">Nominal Anggaran Periode (Rp)</label>
+            <input type="number" id="inputAnggaran" placeholder="Masukkan jumlah anggaran, contoh: 1250000" min="0">
+
+            <label for="tanggalMulai">Tanggal mulai periode pertama</label>
+            <input type="date" id="tanggalMulai">
+
+            <button type="button" id="simpanPeriode">
+                Simpan Pengaturan Periode
+            </button>
+
+            <p id="statusPeriode" style="margin-top: 10px; color: #2563eb; font-weight: 500;"></p>
+        </section>
+
+        <section class="ringkasan">
+            <div class="kartu">
+                <h3>Anggaran Periode</h3>
+                <p id="totalAnggaran">Rp0</p>
+            </div>
+
+            <div class="kartu">
+                <h3>Total Pengeluaran</h3>
+                <p id="totalTerpakai">Rp0</p>
+            </div>
+
+            <div class="kartu">
+                <h3>Sisa Anggaran</h3>
+                <p id="sisaAnggaran">Rp0</p>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Pembagian Anggaran</h2>
+            <div id="daftarAnggaran"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Tambah Pengeluaran</h2>
+
+            <form id="formTransaksi">
+                <label for="keterangan">Nama pengeluaran</label>
+                <input type="text" id="keterangan" required>
+
+                <label for="kategori">Kategori</label>
+                <select id="kategori" required>
+                    <option value="">Pilih kategori</option>
+                    <option value="Makan">Makan</option>
+                    <option value="Transportasi">Transportasi</option>
+                    <option value="Listrik">Listrik</option>
+                    <option value="Pulsa/Kuota">Pulsa/Kuota</option>
+                    <option value="Kebutuhan pribadi">Kebutuhan pribadi</option>
+                    <option value="Jajan">Jajan</option>
+                    <option value="Tabungan">Tabungan rutin</option>
+                    <option value="Cadangan">Cadangan</option>
+                </select>
+
+                <label for="jumlah">Jumlah pengeluaran (Rp)</label>
+                <input type="number" id="jumlah" min="1" required>
+
+                <label for="tanggal">Tanggal transaksi</label>
+                <input type="date" id="tanggal" required>
+
+                <button type="submit">Simpan Pengeluaran</button>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Riwayat Transaksi</h2>
+            <div id="daftarTransaksi"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Tabungan Akumulatif</h2>
+
+            <p>Total tabungan: <strong id="totalTabungan">Rp0</strong></p>
+            <p>Sisa periode saat ini: <strong id="sisaMenunggu">Rp0</strong></p>
+
+            <label for="bulanTutup">Pilih bulan yang akan ditutup</label>
+            <input type="month" id="bulanTutup">
+
+            <button type="button" id="tutupBulan">
+                Pindahkan Sisa Bulan ke Tabungan
+            </button>
+
+            <p id="statusPenutupan"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Keuangan Pribadiku &copy; 2026</p>
+    </footer>
+</body>
+</html>
