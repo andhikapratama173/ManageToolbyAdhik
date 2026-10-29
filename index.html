@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <h1>Keuangan Pribadiku</h1>
+        <h1>Manage Tool by aDhik!</h1>
         <p>Kelola anggaran, pengeluaran, dan tabunganmu.</p>
     </header>
 
@@ -48,7 +48,49 @@
         </section>
 
         <section class="panel">
-            <h2>Pembagian Anggaran</h2>
+            <h2>Pembagian Anggaran & Persentase</h2>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">Atur persentase jatah untuk tiap kategori (total harus 100%):</p>
+            
+            <div id="formPersentase" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 15px;">
+                <div>
+                    <label for="pMakan">Makan (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Makan" id="pMakan" value="35" min="0" max="100">
+                </div>
+                <div>
+                    <label for="pTransportasi">Transportasi (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Transportasi" id="pTransportasi" value="10" min="0" max="100">
+                </div>
+                <div>
+                    <label for="pListrik">Listrik (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Listrik" id="pListrik" value="5" min="0" max="100">
+                </div>
+                <div>
+                    <label for="pPulsa">Pulsa/Kuota (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Pulsa/Kuota" id="pPulsa" value="5" min="0" max="100">
+                </div>
+                <div>
+                    <label for="pKebutuhan">Kebutuhan pribadi (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Kebutuhan pribadi" id="pKebutuhan" value="15" min="0" max="100">
+                </div>
+                <div>
+                    <label for="pJajan">Jajan (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Jajan" id="pJajan" value="10" min="0" max="100">
+                </div>
+                <div>
+                    <label for="pTabungan">Tabungan (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Tabungan" id="pTabungan" value="10" min="0" max="100">
+                </div>
+                <div>
+                    <label for="pCadangan">Cadangan (%)</label>
+                    <input type="number" class="input-persen" data-kategori="Cadangan" id="pCadangan" value="10" min="0" max="100">
+                </div>
+            </div>
+
+            <button type="button" id="simpanPersentase">Simpan Persentase</button>
+            <p id="statusPersentase" style="margin-top: 5px; font-weight: bold;"></p>
+
+            <hr style="margin: 15px 0; border: none; border-top: 1px solid #e2e8f0;">
+
             <div id="daftarAnggaran"></div>
         </section>
 
@@ -105,7 +147,7 @@
     </main>
 
     <footer>
-        <p>Keuangan Pribadiku &copy; 2026</p>
+        <p>Manage Tool by aDhik! &copy; 2026</p>
     </footer>
 </body>
 </html>
