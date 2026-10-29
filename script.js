@@ -1,11 +1,11 @@
-const ALOKASI_PERSEN = {
-    'Makan': 0.40,
+let alokasiPersen = JSON.parse(localStorage.getItem('alokasiPersen')) || {
+    'Makan': 0.35,
     'Transportasi': 0.10,
     'Listrik': 0.05,
-    'Pulsa/Kuota': 0.04,
-    'Kebutuhan pribadi': 0.06,
-    'Jajan': 0.08,
-    'Tabungan': 0.12,
+    'Pulsa/Kuota': 0.05,
+    'Kebutuhan pribadi': 0.15,
+    'Jajan': 0.10,
+    'Tabungan': 0.10,
     'Cadangan': 0.10
 };
 
@@ -29,9 +29,21 @@ const elSisaMenunggu = document.getElementById('sisaMenunggu');
 const elBulanTutup = document.getElementById('bulanTutup');
 const elTutupBulan = document.getElementById('tutupBulan');
 const elStatusPenutupan = document.getElementById('statusPenutupan');
+const elSimpanPersentase = document.getElementById('simpanPersentase');
+const elStatusPersentase = document.getElementById('statusPersentase');
 
 function formatRupiah(angka) {
     return 'Rp' + Math.floor(angka).toLocaleString('id-ID');
+}
+
+function muatInputPersentase() {
+    const inputs = document.querySelectorAll('.input-persen');
+    inputs.forEach(input => {
+        const kat = input.getAttribute('data-kategori');
+        if (alokasiPersen[kat] !== undefined) {
+            input.value = Math.round(alokasiPersen[kat] * 100);
+        }
+    });
 }
 
 elInputAnggaran.value = anggaranPeriode;
@@ -61,6 +73,32 @@ elSimpanPeriode.addEventListener('click', () => {
     perbaruiTampilan();
 });
 
+elSimpanPersentase.addEventListener('click', () => {
+    const inputs = document.querySelectorAll('.input-persen');
+    let totalPersen = 0;
+    const objekBaru = {};
+
+    inputs.forEach(input => {
+        const val = parseFloat(input.value) || 0;
+        const kat = input.getAttribute('data-kategori');
+        totalPersen += val;
+        objekBaru[kat] = val / 100;
+    });
+
+    if (totalPersen !== 100) {
+        elStatusPersentase.style.color = '#ef4444';
+        elStatusPersentase.textContent = `Total persentase saat ini ${totalPersen}%. Harus pas 100%!`;
+        return;
+    }
+
+    alokasiPersen = objekBaru;
+    localStorage.setItem('alokasiPersen', JSON.stringify(alokasiPersen));
+
+    elStatusPersentase.style.color = '#16a34a';
+    elStatusPersentase.textContent = 'Persentase berhasil disimpan!';
+    perbaruiTampilan();
+});
+
 function perbaruiTampilan() {
     const totalPengeluaran = transaksi.reduce((acc, curr) => acc + curr.jumlah, 0);
     const sisa = anggaranPeriode - totalPengeluaran;
@@ -72,7 +110,7 @@ function perbaruiTampilan() {
     elSisaMenunggu.textContent = formatRupiah(sisa > 0 ? sisa : 0);
 
     elDaftarAnggaran.innerHTML = '';
-    for (const [kategori, persen] of Object.entries(ALOKASI_PERSEN)) {
+    for (const [kategori, persen] of Object.entries(alokasiPersen)) {
         const jatah = anggaranPeriode * persen;
         const terpakaiKategori = transaksi
             .filter(t => t.kategori === kategori)
@@ -82,7 +120,7 @@ function perbaruiTampilan() {
         const div = document.createElement('div');
         div.className = 'item-anggaran';
         div.innerHTML = `
-            <strong>${kategori} (${persen * 100}%)</strong><br>
+            <strong>${kategori} (${Math.round(persen * 100)}%)</strong><br>
             Jatah: ${formatRupiah(jatah)}<br>
             Sisa: <span style="color: ${sisaKategori < 0 ? 'red' : 'green'}">${formatRupiah(sisaKategori)}</span>
         `;
@@ -151,4 +189,5 @@ elTutupBulan.addEventListener('click', () => {
     perbaruiTampilan();
 });
 
+muatInputPersentase();
 perbaruiTampilan();
